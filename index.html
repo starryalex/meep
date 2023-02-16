@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <body style="background: rgb(238,174,202); background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(142,175,213,1) 100%);">
+        <style>
+            h1 {
+                text-align: center;
+                border: 2px solid whitesmoke;
+            }
+            
+            p {
+                text-align: right;
+            }
+            
+            .test {
+                background-color: lavender;
+                color: darkslategray;
+                border: 3px dotted pink;
+                margin: 50px;
+                padding: 20px;
+                border-radius: 25px;
+            }
+            
+            .sidebox {
+                background-color: navajowhite;
+                color: palevioletred;
+                font-family: monospace;
+                border: 0px;
+                margin: 10px;
+                padding: 50px;
+                border-radius: 25px;
+            }
+            
+            .flex-container {
+                display: flex;
+                height: 500px;
+                margin: 100px;
+                align-items: flex-start;
+                background-color: wheat;
+                border: 5px dashed pink;
+                border-radius: 40px;
+                flex-class: wrap;
+                justify-content: space-around;
+            }
+            
+            .flex-container>div {
+                background-color: pink;
+                width: 500px;
+                margin: 10px;
+                text-align: center;
+                line-height: 75px;
+                font-size: 30px;
+                padding: 50px;
+                border-radius: 25px;
+            }
+            .maintable {
+              border:"1" width="100%";
+              border-color:"black";
+                <col style="width:20%";
+                <col style="width:80%";
+            }
+        </style>
+        <script type="text/javascript">
+// <![CDATA[
+var colour="#FFFFFF";
+var sparkles=120;
+
+/****************************
+*  Tinkerbell Magic Sparkle *
+* (c) 2005 mf2fm web-design *
+*  http://www.mf2fm.com/rv  *
+* DON'T EDIT BELOW THIS BOX *
+****************************/
+var x=ox=400;
+var y=oy=300;
+var swide=800;
+var shigh=600;
+var sleft=sdown=0;
+var tiny=new Array();
+var star=new Array();
+var starv=new Array();
+var starx=new Array();
+var stary=new Array();
+var tinyx=new Array();
+var tinyy=new Array();
+var tinyv=new Array();
+
+window.onload=function() { if (document.getElementById) {
+  var i, rats, rlef, rdow;
+  for (var i=0; i<sparkles; i++) {
+    var rats=createDiv(3, 3);
+    rats.style.visibility="hidden";
+    document.body.appendChild(tiny[i]=rats);
+    starv[i]=0;
+    tinyv[i]=0;
+    var rats=createDiv(5, 5);
+    rats.style.backgroundColor="transparent";
+    rats.style.visibility="hidden";
+    var rlef=createDiv(1, 5);
+    var rdow=createDiv(5, 1);
+    rats.appendChild(rlef);
+    rats.appendChild(rdow);
+    rlef.style.top="2px";
+    rlef.style.left="0px";
+    rdow.style.top="0px";
+    rdow.style.left="2px";
+    document.body.appendChild(star[i]=rats);
+  }
+  set_width();
+  sparkle();
+}}
+
+function sparkle() {
+  var c;
+  if (x!=ox || y!=oy) {
+    ox=x;
+    oy=y;
+    for (c=0; c<sparkles; c++) if (!starv[c]) {
+      star[c].style.left=(starx[c]=x)+"px";
+      star[c].style.top=(stary[c]=y)+"px";
+      star[c].style.clip="rect(0px, 5px, 5px, 0px)";
+      star[c].style.visibility="visible";
+      starv[c]=50;
+      break;
+    }
+  }
+  for (c=0; c<sparkles; c++) {
+    if (starv[c]) update_star(c);
+    if (tinyv[c]) update_tiny(c);
+  }
+  setTimeout("sparkle()", 40);
+}
+
+function update_star(i) {
+  if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)";
+  if (starv[i]) {
+    stary[i]+=1+Math.random()*3;
+    if (stary[i]<shigh+sdown) {
+      star[i].style.top=stary[i]+"px";
+      starx[i]+=(i%5-2)/5;
+      star[i].style.left=starx[i]+"px";
+    }
+    else {
+      star[i].style.visibility="hidden";
+      starv[i]=0;
+      return;
+    }
+  }
+  else {
+    tinyv[i]=50;
+    tiny[i].style.top=(tinyy[i]=stary[i])+"px";
+    tiny[i].style.left=(tinyx[i]=starx[i])+"px";
+    tiny[i].style.width="2px";
+    tiny[i].style.height="2px";
+    star[i].style.visibility="hidden";
+    tiny[i].style.visibility="visible"
+  }
+}
+
+function update_tiny(i) {
+  if (--tinyv[i]==25) {
+    tiny[i].style.width="1px";
+    tiny[i].style.height="1px";
+  }
+  if (tinyv[i]) {
+    tinyy[i]+=1+Math.random()*3;
+    if (tinyy[i]<shigh+sdown) {
+      tiny[i].style.top=tinyy[i]+"px";
+      tinyx[i]+=(i%5-2)/5;
+      tiny[i].style.left=tinyx[i]+"px";
+    }
+    else {
+      tiny[i].style.visibility="hidden";
+      tinyv[i]=0;
+      return;
+    }
+  }
+  else tiny[i].style.visibility="hidden";
+}
+
+document.onmousemove=mouse;
+function mouse(e) {
+  set_scroll();
+  y=(e)?e.pageY:event.y+sdown;
+  x=(e)?e.pageX:event.x+sleft;
+}
+
+function set_scroll() {
+  if (typeof(self.pageYOffset)=="number") {
+    sdown=self.pageYOffset;
+    sleft=self.pageXOffset;
+  }
+  else if (document.body.scrollTop || document.body.scrollLeft) {
+    sdown=document.body.scrollTop;
+    sleft=document.body.scrollLeft;
+  }
+  else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
+    sleft=document.documentElement.scrollLeft;
+	sdown=document.documentElement.scrollTop;
+  }
+  else {
+    sdown=0;
+    sleft=0;
+  }
+}
+
+window.onresize=set_width;
+function set_width() {
+  if (typeof(self.innerWidth)=="number") {
+    swide=self.innerWidth;
+    shigh=self.innerHeight;
+  }
+  else if (document.documentElement && document.documentElement.clientWidth) {
+    swide=document.documentElement.clientWidth;
+    shigh=document.documentElement.clientHeight;
+  }
+  else if (document.body.clientWidth) {
+    swide=document.body.clientWidth;
+    shigh=document.body.clientHeight;
+  }
+}
+
+function createDiv(height, width) {
+  var div=document.createElement("div");
+  div.style.position="absolute";
+  div.style.height=height+"px";
+  div.style.width=width+"px";
+  div.style.overflow="hidden";
+  div.style.backgroundColor=colour;
+  return (div);
+}
+// ]]>
+</script>
+
+        </head>
+
+<div class="headbox">
+  <center><img src="https://d2w9rnfcy7mm78.cloudfront.net/16507952/original_bc59b486329f94bf5f07b351f94721a3.jpg?1652844755?bc=0" class="header"></center>
+  </div>
+
+  
+        <a href="https://c.tenor.com/lolcvIC490YAAAAd/happy-smile.gif"><img src="https://web.archive.org/web/20091019020520/http://www.geocities.com/princess_sanrio/movingpocha.gif" align="right"></a>
+        <img src="https://picasion.com/gl/92/fLKh.gif" align="right">
+            <div class="sidebar">
+            
+      <div class="test">
+            <p><span style="color:lightsteelblue;"> nya welcome </span></p>
+
+
+
+            <p> hiiiiiiiiiiiii hope ur day is good 2day :3 breathe fresh air if U can! </p>
+        </div>
+  <img src="https://64.media.tumblr.com/a2b85146cdf321da28b28f6d73c9bf62/f3b3ee00798cbdf2-44/s400x600/68d10cd2c0c0e3a49f14133d5939eeb2d6eb6776.gifv"><img src="https://64.media.tumblr.com/a2b85146cdf321da28b28f6d73c9bf62/f3b3ee00798cbdf2-44/s400x600/68d10cd2c0c0e3a49f14133d5939eeb2d6eb6776.gifv"><img src="https://64.media.tumblr.com/a2b85146cdf321da28b28f6d73c9bf62/f3b3ee00798cbdf2-44/s400x600/68d10cd2c0c0e3a49f14133d5939eeb2d6eb6776.gifv">
+
+        <div class="flex-container">
+            <div>
+                <p><span style="color:lightsteelblue;"> meowmeowmeowmeowmeowmeow
+                meowmeowmeowmeowmeowmeow
+                meowmeowmeowmeowmeowmeow
+                meowmeowmeowmeowmeowmeow
+               </span></p>
+            </div>
+            <div>
+                <a href="https://virtualstarlight.tumblr.com"><img src="https://d2w9rnfcy7mm78.cloudfront.net/16004927/original_79214ca386aa8f19e8ec71b89cf9e9d1.gif?1649660823?bc=0"></a>
+            </div>
+        </div>
+        <a href='hai.html'><img src="https://i.pinimg.com/originals/d9/09/4a/d9094ab4ac0af2c2987bc097247f2ede.gif" style="postion:absolute; bottom: -10px; left:-10px"></a>
+        <img src="https://d2w9rnfcy7mm78.cloudfront.net/16004963/original_a6c2b1474b02ae85c10acb350497dc72.gif?1649661091?bc=0" style="position:absolute; top:5px; left:-10px;">
+        <a href='GIFARCHIVE.html'><img src="https://99gifshop.neocities.org/items/4/mittel.gif" style="position:absolute; bottom: -10px; right: 5px;"></a>
+        <style type="text/css">
+            * {
+                cursor: url(https://cur.cursors-4u.net/anime/ani-1/ani188.cur), auto !important;
+            }
+        </style>
+    
+<style type="text/css">* {cursor: url(https://cur.cursors-4u.net/anime/ani-1/ani197.ani), url(https://cur.cursors-4u.net/anime/ani-1/ani197.png), auto !important;}</style><a href="https://www.cursors-4u.com/cursor/2008/11/07/my-melody.html" target="_blank" title="Blinking My Melody"><img src="https://cur.cursors-4u.net/cursor.png" border="0" alt="Blinking My Melody" style="position:absolute; top: 0px; right: 0px;" /></a>
+  <a href="https://dokodemo.neocities.org/" title="made by Dokodemo"><img src="https://dokodemo.neocities.org/images/monsters/axolotl1.png"></a>
+  
+    </body>
+
+</html>
